@@ -4,19 +4,21 @@ import time
 import datetime
 from threading import Thread, Event
 
+
 class Connection(Thread):
 
     def __init__(
-            self,
-            *arge,
-            url,
-            onOpen=None,
-            onMessage=None,
-            onClose=None,
-            onError=None,
-            log_level=None,
-            reconnect_interval=30,
-            **kwargs):
+        self,
+        *arge,
+        url,
+        onOpen=None,
+        onMessage=None,
+        onClose=None,
+        onError=None,
+        log_level=None,
+        reconnect_interval=30,
+        **kwargs
+    ):
 
         self._url = url
         self._onOpen = onOpen
@@ -34,20 +36,18 @@ class Connection(Thread):
         self._log = None
         self._init_log(log_level)
 
-
         Thread.__init__(self)
         self.daemon = True
 
-    def _init_log(self,log_level):
+    def _init_log(self, log_level):
         self._log = logging.getLogger(__name__)
         self._log.setLevel(level=log_level)
-        formatter = logging.Formatter('%(asctime)s - %(message)s')
+        formatter = logging.Formatter("%(asctime)s - %(message)s")
 
         handler = logging.FileHandler("socket.log")
         handler.setLevel(log_level)
         handler.setFormatter(formatter)
         self._log.addHandler(handler)
-
 
         console = logging.StreamHandler()
         console.setLevel(logging.DEBUG)
@@ -55,13 +55,13 @@ class Connection(Thread):
         self._log.addHandler(console)
 
     def _connect(self):
-        self._log.debug('初始化websocket并发起链接')
+        self._log.debug("初始化websocket并发起链接")
         self._socket = websocket.WebSocketApp(
             self._url,
             on_open=self._on_open,
             on_message=self._on_message,
             on_close=self._on_close,
-            on_error=self._on_error
+            on_error=self._on_error,
         )
         self._socket.run_forever()
 
@@ -71,7 +71,7 @@ class Connection(Thread):
                 self._socket.sock = None
                 delay = self._reconnect_interval
                 while delay > 0:
-                    self._log.info('%ds 后重连' % delay)
+                    self._log.info("%ds 后重连" % delay)
                     time.sleep(1)
                     delay -= 1
                 self._socket.keep_running = True
@@ -99,7 +99,7 @@ class Connection(Thread):
             self._socket.close()
 
     def _on_open(self, ws):
-        self._log.debug('连接成功')
+        self._log.debug("连接成功")
         self.isConnected.set()
         self._reconnect_required.set()
         if self._onOpen:
@@ -113,12 +113,12 @@ class Connection(Thread):
 
     def _on_close(self, ws):
         self.isConnected.clear()
-        self._log.debug('链接已经关闭')
+        self._log.debug("链接已经关闭")
         if self._onClose:
             self._onClose()
 
     def _on_error(self, ws, error):
-        self._log.debug('websocket出错 %s' % error)
+        self._log.debug("websocket出错 %s" % error)
         self.isConnected.clear()
         if self._onError:
             self._onError(error)
@@ -134,5 +134,5 @@ class Connection(Thread):
             self._lastChance()
 
     def _startCheckDataTimer(self):
-        self._checkDataThread = Thread(target=self._loop, name='CheckData ' + self.name)
+        self._checkDataThread = Thread(target=self._loop, name="CheckData " + self.name)
         self._checkDataThread.start()

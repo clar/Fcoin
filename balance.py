@@ -1,8 +1,7 @@
 
 #!-*-coding:utf-8 -*-
-#@TIME    : 2018/6/10/0010 11:56
-#@Author  : Nogo
-
+# @TIME    : 2018/6/10/0010 11:56
+# @Author  : Nogo
 
 
 class balance(object):
