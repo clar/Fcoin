@@ -5,8 +5,8 @@
 
 
 # 秘钥
-key = "0000"
-secret = "0000"
+key = "fce20aad33e74e3ab1a4c005c1330873"
+secret = "5819deef122f4e0dbdc1c82d8bb52c94"
 
 
 # 精度和最小挂单量
@@ -61,7 +61,7 @@ btm = {
 }
 
 # 交易对，仅支持以上USDT交易对
-symbol = ft
+symbol = btc
 
 # 抱团模式：固定价格刷单(等于0就是市价，大于0固定该价格)
 fix_price = 0

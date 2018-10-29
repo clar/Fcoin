@@ -1,4 +1,3 @@
-
 #!-*-coding:utf-8 -*-
 # @TIME    : 2018/6/11/0011 15:36
 # @Author  : Nogo
@@ -27,7 +26,7 @@ class fcoin_client(object):
 
     def __init__(self, log_level=logging.DEBUG):
         self._client = Connection(
-            url="wss://api.fcoin.com/v2/ws",
+            url="wss://api.fcoinjp.com/v2/ws",
             onOpen=self._onOpen,
             onMessage=self._onMessage,
             onClose=self._onClose,
