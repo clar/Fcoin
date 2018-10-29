@@ -1,4 +1,3 @@
-
 #!-*-coding:utf-8 -*-
 # @TIME    : 2018/6/10/0010 11:19
 # @Author  : Nogo
@@ -16,7 +15,7 @@ from collections import OrderedDict
 
 class Fcoin:
 
-    def __init__(self, base_url="https://api.fcoin.com/v2/"):
+    def __init__(self, base_url="https://api.fcoinjp.com/v2/"):
         self.base_url = base_url
 
     def auth(self, key, secret):
